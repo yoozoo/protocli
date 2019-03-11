@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 
 	"github.com/spf13/cobra"
+	"github.com/yoozoo/protocli/generator"
 )
 
 func init() {
@@ -23,21 +24,19 @@ func init() {
 }
 
 func outputCode(cmd *cobra.Command, args []string) {
-
-	_, err := ioutil.ReadFile(args[0])
-	// input, err := ioutil.ReadFile(args[0])
+	input, err := ioutil.ReadFile(args[0])
 	if err != nil {
 		panic(fmt.Errorf("reading file %s error: %s", args[0], err))
 	}
 
-	// response := generator.Generate(input)
+	response := generator.Generate(input)
 
-	// for _, file := range response.File {
-	// 	fmt.Println(*file.Name)
-	// 	fmt.Println("-----------------------------------------------------")
-	// 	fmt.Println(*file.Content)
-	// 	fmt.Println("")
-	// 	fmt.Println("")
-	// 	fmt.Println("")
-	// }
+	for _, file := range response.File {
+		fmt.Println(*file.Name)
+		fmt.Println("-----------------------------------------------------")
+		fmt.Println(*file.Content)
+		fmt.Println("")
+		fmt.Println("")
+		fmt.Println("")
+	}
 }
