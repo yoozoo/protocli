@@ -12,21 +12,21 @@ import (
 const (
 	defaultProtocCmd = "protoc"
 	//ProtocBin path for protoc binary under protoapi home
-	ProtocBin = "bin/protoc"
-	//ProtoapiCommonInclude protoapi common proto file directory
-	ProtoapiCommonInclude = "include/protoapi/"
-
+	ProtocBin     = "bin/protoc"
 	protocInclude = "include"
 )
 
 var (
 	pluginName     = ""
 	protocliDirEnv = "_PATH"
+	//ProtocliCommonInclude common proto file directory
+	ProtocliCommonInclude = "include/protocli/"
 )
 
 // Init protoc cli name
 func Init(name string) {
 	pluginName = name
+	ProtocliCommonInclude = "include/" + name + "/"
 	protocliDirEnv = strings.ToUpper(name) + "_PATH"
 }
 
@@ -74,11 +74,11 @@ func GetDefaultProtoc(incPath string) (protoc string, newProtocIncPath string) {
 	}
 	// check existen
 	if _, err := os.Stat(protoc); err != nil {
-		Die(fmt.Errorf("Failed to find protoc. Please run `protoapi init` command to initialize. \n\nDetail: %s", err.Error()))
+		Die(fmt.Errorf("Failed to find protoc. Please run `%s init` command to initialize. \n\nDetail: %s", pluginName, err.Error()))
 	} else {
 		newProtocIncPath = homedir + protocInclude
 		if _, err := os.Stat(newProtocIncPath); err != nil {
-			Die(fmt.Errorf("Failed to find protoc include folder. Please run `protoapi init` command to initialize.\n\nDetail: %s", err.Error()))
+			Die(fmt.Errorf("Failed to find protoc include folder. Please run `%s init` command to initialize.\n\nDetail: %s", pluginName, err.Error()))
 		}
 		if len(incPath) > 0 {
 			newProtocIncPath += string(os.PathListSeparator) + incPath

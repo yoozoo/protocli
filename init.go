@@ -81,17 +81,17 @@ func initCommandFunc(cmd *cobra.Command, args []string) {
 			fmt.Printf("\n\nFailed to delete protoc.zip from %s: %s", workingDir+"/protoc.zip", err.Error())
 		}
 	}
-	// write protoapi include file
-	protoapiIncPath := workingDir + util.ProtoapiCommonInclude
-	os.MkdirAll(protoapiIncPath, os.ModePerm)
-	if _, err := os.Stat(protoapiIncPath); err != nil {
-		util.Die(fmt.Errorf("Failed create directory %s: %s", protoapiIncPath, err))
+	// write protocli include file
+	protocliIncPath := workingDir + util.ProtocliCommonInclude
+	os.MkdirAll(protocliIncPath, os.ModePerm)
+	if _, err := os.Stat(protocliIncPath); err != nil {
+		util.Die(fmt.Errorf("Failed create directory %s: %s", protocliIncPath, err))
 	}
-	err := util.ExtractIncludes(protoapiIncPath)
+	err := util.ExtractIncludes(protocliIncPath)
 	if err != nil {
-		util.Die(fmt.Errorf("Failed to download protoapi include file into %s: %s", protoapiIncPath, err))
+		util.Die(fmt.Errorf("Failed to download %s include file into %s: %s", PluginName, protocliIncPath, err))
 	}
-	fmt.Println("protoapi initialized.")
+	fmt.Println(PluginName + " initialized.")
 }
 
 // downloadFile will download a url to a local file. It's efficient because it will
