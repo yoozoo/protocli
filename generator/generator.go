@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"path/filepath"
-	"reflect"
 	"strconv"
 	"strings"
 	"unicode"
@@ -692,29 +691,22 @@ func Generate(input []byte) *plugin.CodeGeneratorResponse {
 			}
 		}
 	}
+	gen := data.GetCodeGenerator(outputLang)
+	response := new(plugin.CodeGeneratorResponse)
+	gen.Init(request)
 
-	if gen, ok := data.OutputMap[outputLang]; ok {
-		response := new(plugin.CodeGeneratorResponse)
-		gen.Init(request)
-
-		results, err := gen.Gen(applicationName, packageName, services, messages, enums, options)
-		if err != nil {
-			util.Die(err)
-		}
-		for file, content := range results {
-			var resultFile = new(plugin.CodeGeneratorResponse_File)
-			// generate the file to the specified package
-			fileName := file
-			resultFile.Name = &fileName
-			fileContent := content
-			resultFile.Content = &fileContent
-			response.File = append(response.File, resultFile)
-		}
-		return response
+	results, err := gen.Gen(applicationName, packageName, services, messages, enums, options)
+	if err != nil {
+		util.Die(err)
 	}
-
-	err = fmt.Errorf("Output plugin not found for %s\nsupported options: %v", outputLang, reflect.ValueOf(data.OutputMap).MapKeys())
-	util.Die(err)
-
-	return nil
+	for file, content := range results {
+		var resultFile = new(plugin.CodeGeneratorResponse_File)
+		// generate the file to the specified package
+		fileName := file
+		resultFile.Name = &fileName
+		fileContent := content
+		resultFile.Content = &fileContent
+		response.File = append(response.File, resultFile)
+	}
+	return response
 }

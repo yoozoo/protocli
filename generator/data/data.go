@@ -1,6 +1,8 @@
 package data
 
 import (
+	"fmt"
+
 	"github.com/golang/protobuf/protoc-gen-go/descriptor"
 
 	plugin "github.com/golang/protobuf/protoc-gen-go/plugin"
@@ -135,16 +137,45 @@ type ServiceData struct {
 	Service         *descriptor.ServiceDescriptorProto
 }
 
-// Option is a structure represents the option declared in a proto file
+// OptionMap is a structure represents the option declared in a proto file
 type OptionMap map[string]string
 
+// CodeGenerator define the interface for code generator
 type CodeGenerator interface {
 	Init(request *plugin.CodeGeneratorRequest)
 	Gen(applicationName string, packageName string, services []*ServiceData, messages []*MessageData, enums []*EnumData, options OptionMap) (map[string]string, error)
 }
 
-// OutputMap the registra for output code type and its associated output plugin
-var OutputMap = make(map[string]CodeGenerator)
+var outputMap = make(map[string]CodeGenerator)
+
+// RegisterCodeGenerator register CodeGenerator with given name
+func RegisterCodeGenerator(name string, gen CodeGenerator) {
+	if _, ok := outputMap[name]; ok {
+		panic(fmt.Errorf("%s code generator already exist", name))
+	}
+
+	outputMap[name] = gen
+}
+
+// GetCodeGenerator register CodeGenerator with given name
+func GetCodeGenerator(name string) CodeGenerator {
+	if gen, ok := outputMap[name]; ok {
+		return gen
+	}
+
+	panic(fmt.Errorf("%s code generator not found", name))
+}
+
+// HasCodeGenerator returns if CodeGenerator has been registered
+func HasCodeGenerator(name string) bool {
+	_, ok := outputMap[name]
+	return ok
+}
+
+// GetCodeGeneratorMap returns code generator map
+func GetCodeGeneratorMap() map[string]CodeGenerator {
+	return outputMap
+}
 
 // CommentMap map comment to message/service/field
 // path => comment

@@ -56,9 +56,9 @@ func generateCode(cmd *cobra.Command, args []string) {
 	var params = make(map[string]string)
 	params[langFlag] = genFlagValue.langValue
 
-	if _, ok := data.OutputMap[genFlagValue.langValue]; !ok {
+	if !data.HasCodeGenerator(genFlagValue.langValue) {
 		err := fmt.Errorf("Output plugin not found for %s\nsupported options: %v",
-			genFlagValue.langValue, reflect.ValueOf(data.OutputMap).MapKeys())
+			genFlagValue.langValue, reflect.ValueOf(data.GetCodeGeneratorMap()).MapKeys())
 		util.Die(err)
 	}
 
