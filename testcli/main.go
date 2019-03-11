@@ -6,5 +6,6 @@ import (
 
 func main() {
 	protocli.Init("foobar", "0.0.2")
+	protocli.KeepDefaultLangOut = true
 	protocli.Run()
 }

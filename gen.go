@@ -35,6 +35,8 @@ func (g *genFlagData) reset() {
 	g.protoCustomParam = ""
 }
 
+var KeepDefaultLangOut bool
+
 var genFlagValue genFlagData
 
 // genCmd represents the gen command
@@ -104,6 +106,9 @@ func generateCode(cmd *cobra.Command, args []string) {
 	arglist = append(arglist, "--plugin=protoc-gen-custom="+executable)
 	arglist = append(arglist, "--custom_out="+cmdParam+":"+outputDir)
 	arglist = append(arglist, protoFile)
+	if KeepDefaultLangOut {
+		arglist = append(arglist, "--"+genFlagValue.langValue+"_out=:"+outputDir)
+	}
 	protoCmd := exec.Command(protoc, arglist...)
 
 	protoCmd.Stderr = os.Stderr
@@ -115,7 +120,7 @@ func generateCode(cmd *cobra.Command, args []string) {
 }
 
 func init() {
-	genCmd.Flags().StringVar(&genFlagValue.langValue, langFlag, "", "language of the generated code, default is ts.")
+	genCmd.Flags().StringVar(&genFlagValue.langValue, langFlag, "go", "language of the generated code, default is go.")
 	genCmd.Flags().StringVar(&genFlagValue.protoIncPath, protoPathFlag, "", "extra proto file import paths, seperated by ':'(unix) or ';'(windows)")
 	genCmd.Flags().StringVar(&genFlagValue.protoCustomParam, protoCustomParamFlag, "", "custom parameters to the specific plugin, <key>=<value> separated by ',' ")
 }

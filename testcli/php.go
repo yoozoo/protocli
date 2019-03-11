@@ -23,5 +23,6 @@ func (g *yii2Gen) Gen(applicationName string, packageName string, services []*da
 }
 
 func init() {
-	data.RegisterCodeGenerator("yii2", &yii2Gen{})
+	data.RegisterCodeGenerator("go", &yii2Gen{})
+	data.RegisterCodeGenerator("php", &yii2Gen{})
 }
