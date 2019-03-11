@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	protocli.PluginName = "foobar"
+	protocli.Init("foobar", "0.0.2")
 	protocli.Execute()
 }

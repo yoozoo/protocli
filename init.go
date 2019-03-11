@@ -24,11 +24,7 @@ var protocURLMap = map[string]string{
 	"linux":   "https://github.com/google/protobuf/releases/download/v" + ProtocVersion + "/protoc-" + ProtocVersion + "-linux-x86_64.zip",
 }
 
-var initCmd = &cobra.Command{
-	Use:   "init",
-	Short: "Downloads protoc binary and required files into $HOME/." + PluginName + "/ folder",
-	Run:   initCommandFunc,
-}
+var initCmd *cobra.Command
 
 var (
 	forceInit = false
@@ -46,7 +42,7 @@ func initCommandFunc(cmd *cobra.Command, args []string) {
 		util.Die(fmt.Errorf("unsupported system %s", runtime.GOOS))
 	}
 
-	workingDir := util.GetProtoapiHome()
+	workingDir := util.GetProtocliHome()
 
 	protocInstalled := false
 	protocFile := workingDir + util.ProtocBin
@@ -173,7 +169,21 @@ func unzip(src string, dest string) ([]string, error) {
 	return filenames, nil
 }
 
-func init() {
+// Init plugin with name, version
+func Init(pluginName, version string) {
+	PluginName = pluginName
+	RootCmd = &cobra.Command{
+		Use:     PluginName,
+		Short:   PluginName + " is command line tool for protobuf",
+		Version: version,
+	}
+
+	initCmd = &cobra.Command{
+		Use:   "init",
+		Short: "Downloads protoc binary and required files into $HOME/." + PluginName + "/ folder",
+		Run:   initCommandFunc,
+	}
+
 	util.Init(PluginName)
 	initCmd.Flags().BoolVar(&forceInit, forceInitFlag, false, "force "+PluginName+" initialization even if it is initialized.")
 	RootCmd.AddCommand(initCmd)

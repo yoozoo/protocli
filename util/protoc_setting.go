@@ -21,12 +21,13 @@ const (
 
 var (
 	pluginName     = ""
-	protoapiDirEnv = "_PATH"
+	protocliDirEnv = "_PATH"
 )
 
+// Init protoc cli name
 func Init(name string) {
 	pluginName = name
-	protoapiDirEnv = strings.ToUpper(name) + "_PATH"
+	protocliDirEnv = strings.ToUpper(name) + "_PATH"
 }
 
 //ClearDir remove all the files/dirs under a directory
@@ -49,9 +50,9 @@ func ClearDir(dir string) error {
 	return nil
 }
 
-//GetProtoapiHome return protoconf home dir
-func GetProtoapiHome() string {
-	homedir := os.Getenv(protoapiDirEnv)
+//GetProtocliHome return protoconf home dir
+func GetProtocliHome() string {
+	homedir := os.Getenv(protocliDirEnv)
 	if len(homedir) == 0 {
 		if usr, err := user.Current(); err == nil {
 			homedir = usr.HomeDir + "/." + pluginName
@@ -65,7 +66,7 @@ func GetProtoapiHome() string {
 
 // GetDefaultProtoc retrieve protoc executable path and protoc Include path
 func GetDefaultProtoc(incPath string) (protoc string, newProtocIncPath string) {
-	homedir := GetProtoapiHome()
+	homedir := GetProtocliHome()
 
 	protoc = homedir + ProtocBin
 	if runtime.GOOS == "windows" {
