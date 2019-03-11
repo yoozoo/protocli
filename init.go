@@ -189,6 +189,8 @@ func Init(pluginName, version string) {
 
 	util.Init(PluginName)
 	initCmd.Flags().BoolVar(&forceInit, forceInitFlag, false, "force "+PluginName+" initialization even if it is initialized.")
+
+	RootCmd.AddCommand(genCmd)
 	RootCmd.AddCommand(initCmd)
 	if codeCmd != nil {
 		RootCmd.AddCommand(codeCmd)
