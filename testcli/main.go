@@ -6,5 +6,5 @@ import (
 
 func main() {
 	protocli.Init("foobar", "0.0.2")
-	protocli.Execute()
+	protocli.Run()
 }

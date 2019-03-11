@@ -1,4 +1,3 @@
-// Package data data structure , constant values and global variables used in protoconf generator related code
 package data
 
 import (
