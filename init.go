@@ -26,6 +26,9 @@ var protocURLMap = map[string]string{
 
 var initCmd *cobra.Command
 
+// codeCmd represents the code command
+var codeCmd *cobra.Command
+
 var (
 	forceInit = false
 )
@@ -187,4 +190,7 @@ func Init(pluginName, version string) {
 	util.Init(PluginName)
 	initCmd.Flags().BoolVar(&forceInit, forceInitFlag, false, "force "+PluginName+" initialization even if it is initialized.")
 	RootCmd.AddCommand(initCmd)
+	if codeCmd != nil {
+		RootCmd.AddCommand(codeCmd)
+	}
 }
