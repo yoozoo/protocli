@@ -4,3 +4,5 @@ Small lib help to build command line program around [protobuf](https://github.co
 
 * Download protoc automatically
 * Create plugin for protoc and run
+* Template for code gen
+* Template for creating new cmd
