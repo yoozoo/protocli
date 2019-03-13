@@ -1,9 +1,11 @@
-package util
+package protocli
 
 import (
 	"io/ioutil"
 	"os"
 	"strings"
+
+	"github.com/yoozoo/protocli/util"
 )
 
 var protocliIncPath string
@@ -19,7 +21,7 @@ func RegisterIncludeFile(name string, content string) {
 // GetIncludePath returns the actual include path
 func GetIncludePath(userPath string, filePath string) string {
 	// extract common includes if needed
-	protocliIncPath := GetProtocliHome() + ProtocliCommonInclude
+	protocliIncPath := util.GetProtocliHome() + util.ProtocliCommonInclude
 	if !CheckIncludesExist() {
 		path, err := ioutil.TempDir("", "protoapi_inc_")
 		if err != nil {

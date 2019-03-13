@@ -90,7 +90,7 @@ func initCommandFunc(cmd *cobra.Command, args []string) {
 	if _, err := os.Stat(protocliIncPath); err != nil {
 		util.Die(fmt.Errorf("Failed create directory %s: %s", protocliIncPath, err))
 	}
-	err := util.ExtractIncludes(protocliIncPath)
+	err := ExtractIncludes(protocliIncPath)
 	if err != nil {
 		util.Die(fmt.Errorf("Failed to download %s include file into %s: %s", PluginName, protocliIncPath, err))
 	}
