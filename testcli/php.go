@@ -19,7 +19,7 @@ func (g *yii2Gen) Init(request *plugin.CodeGeneratorRequest) {
 }
 
 func (g *yii2Gen) Gen(applicationName string, packageName string, services []*data.ServiceData, messages []*data.MessageData, enums []*data.EnumData, options data.OptionMap) (result map[string]string, err error) {
-	return
+	return map[string]string{"test": "test"}, nil
 }
 
 func init() {

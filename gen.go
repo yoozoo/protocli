@@ -101,7 +101,7 @@ func generateCode(cmd *cobra.Command, args []string) {
 
 	var arglist []string
 
-	protoIncPath := util.GetIncludePath(filepath.FromSlash(genFlagValue.protoIncPath), filepath.Dir(protoFile))
+	protoIncPath := GetIncludePath(filepath.FromSlash(genFlagValue.protoIncPath), filepath.Dir(protoFile))
 	arglist = append(arglist, "--"+protoPathFlag+"="+protoIncPath)
 	arglist = append(arglist, "--plugin=protoc-gen-custom="+executable)
 	arglist = append(arglist, "--custom_out="+cmdParam+":"+outputDir)

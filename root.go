@@ -28,7 +28,7 @@ func execute() {
 // Run is the main entraince for protocli
 func Run() {
 	defer func() {
-		util.CleanIncludePath()
+		CleanIncludePath()
 		if r := recover(); r != nil {
 			log.Printf("%s: %s", r, debug.Stack())
 			os.Exit(1)
