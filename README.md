@@ -1,4 +1,5 @@
 # protocli
+[![Build Status](https://travis-ci.org/yoozoo/protocli.svg?branch=master)](https://travis-ci.org/yoozoo/protocli)
 
 Small lib help to build command line program around [protobuf](https://github.com/google/protobuf), `protocli` make it easy to:
 
