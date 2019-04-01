@@ -22,6 +22,10 @@ func (g *yii2Gen) Gen(applicationName string, packageName string, services []*da
 	return map[string]string{"test": "test"}, nil
 }
 
+func (g *yii2Gen) GetLang() string {
+	return "go"
+}
+
 func init() {
 	data.RegisterCodeGenerator("go", &yii2Gen{})
 	data.RegisterCodeGenerator("php", &yii2Gen{})
