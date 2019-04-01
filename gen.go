@@ -107,7 +107,7 @@ func generateCode(cmd *cobra.Command, args []string) {
 	arglist = append(arglist, "--custom_out="+cmdParam+":"+outputDir)
 	arglist = append(arglist, protoFile)
 	if KeepDefaultLangOut {
-		arglist = append(arglist, "--"+genFlagValue.langValue+"_out=:"+outputDir)
+		arglist = append(arglist, "--"+data.GetCodeGenerator(genFlagValue.langValue).GetLang()+"_out=:"+outputDir)
 	}
 	protoCmd := exec.Command(protoc, arglist...)
 
